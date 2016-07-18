@@ -1,0 +1,3 @@
+runtime: custom
+vm: true
+service: 7-java8-jetty9-extended

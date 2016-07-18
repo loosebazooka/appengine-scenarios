@@ -1,0 +1,3 @@
+runtime: custom
+vm: true
+service: 8-java8

@@ -1,0 +1,47 @@
+buildscript {
+  repositories {
+    jcenter()
+    maven {
+      url 'https://oss.sonatype.org/content/repositories/snapshots'
+    }
+  }
+  dependencies {
+    // new pluign
+    classpath "com.google.cloud.tools:appengine-gradle-plugin:0.1.0-beta"
+
+    // old plugin
+    //classpath 'com.google.appengine:gradle-appengine-plugin:1.9.38'
+  }
+}
+
+repositories {
+  jcenter();
+}
+
+apply plugin: 'java'
+apply plugin: 'war'
+
+// new plugin
+apply plugin: 'com.google.cloud.tools.appengine'
+
+// old plugin
+//apply plugin: 'appengine'
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+dependencies {
+   compile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
+}
+
+task wrapper(type: Wrapper) {
+  gradleVersion = "2.12"
+}
+
+model {
+  appengine {
+    run {
+      runtime = 'java'
+    }
+  }
+}
