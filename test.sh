@@ -27,7 +27,7 @@ testDeploy ()
 
   echo "START DEPLOY $project"
   mvn -f $pom clean appengine:deploy &> /dev/null || return 1
-  curl http://${project}-dot-${gcpproject}.appspot.com/test  &> /dev/null | grep -z $pattern && echo $project is up || (echo "$pattern not found in $project" && return 1)
+  curl http://${project}-dot-${gcpproject}.appspot.com/test | grep -z $pattern &> /dev/null && echo $project is up || (echo "$pattern not found in $project" && return 1)
   gcloud app services delete $project --quiet &> /dev/null || return 1
   echo "DEPLOY PASS $project"
 }
