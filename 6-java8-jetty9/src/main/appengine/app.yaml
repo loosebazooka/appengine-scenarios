@@ -1,0 +1,3 @@
+runtime: java
+vm: true
+service: 6-java8-jetty9

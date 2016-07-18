@@ -27,8 +27,8 @@ apply plugin: 'com.google.cloud.tools.appengine'
 // old plugin
 //apply plugin: 'appengine'
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+sourceCompatibility = JavaVersion.VERSION_1_7
+targetCompatibility = JavaVersion.VERSION_1_7
 
 dependencies {
    compile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'

@@ -10,11 +10,11 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>8-java8</artifactId>
+  <artifactId>1_standard</artifactId>
   <packaging>war</packaging>
 
   <properties>
-    <java.target.version>1.8</java.target.version>
+    <java.target.version>1.7</java.target.version>
   </properties>
 
 

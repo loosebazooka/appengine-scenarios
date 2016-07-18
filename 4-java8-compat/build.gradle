@@ -37,3 +37,11 @@ dependencies {
 task wrapper(type: Wrapper) {
   gradleVersion = "2.12"
 }
+
+model {
+  appengine {
+    run {
+      runtime = 'java'
+    }
+  }
+}
