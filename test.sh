@@ -6,26 +6,25 @@
 JAVA_HOME=/usr/local/buildtools/java/jdk8
 
 # get cloud project from inputs
-if [ "$#" -ne 1 ]; then
+if [ "$#" -ne 2 ]; then
   echo "usage $0 <cloud-project> <gradle/maven>"
   exit 1
 fi 
 gcpproject=$1
 buildTool=$2
 
-if [ $buildTool -eq "maven" ]; then
-  devAppServerStart="mvn -f ${project}/pom.xml clean appengine:start"
-  devAppServerStop="mvn -f $pom appengine:stop"
-fi
 
 testDevserver ()
 {
   local project=$1
   local pattern=$2
 
-  #local pom=${project}/pom.xml
-  #mvn -f $pom clean appengine:start &> /dev/null
-  eval "${devAppServerStart} &> /dev/null"
+  if [ $buildTool = "maven" ]; then
+    devAppServerStart="mvn -f ${project}/pom.xml clean appengine:start"
+    devAppServerStop="mvn -f ${project}/pom.xml appengine:stop"
+  fi
+
+  eval ${devAppServerStart} &> /dev/null
 
   if curl --silent http://localhost:8080/test | grep -z $pattern &> /dev/null
   then
@@ -35,8 +34,8 @@ testDevserver ()
     return 1
   fi
 
-  #mvn -f $pom appengine:stop &> /dev/null 
-  eval "${devAppServerStop}" &> /dev/null 
+  eval $devAppServerStop &> /dev/null 
+
   echo "DEVSERVER PASS $project"
 
   return 0
