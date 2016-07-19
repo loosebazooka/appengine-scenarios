@@ -10,7 +10,7 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>1_standard</artifactId>
+  <artifactId>1-standard</artifactId>
   <packaging>war</packaging>
 
   <properties>

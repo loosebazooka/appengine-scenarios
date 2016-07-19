@@ -10,7 +10,7 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>4_java8_compat</artifactId>
+  <artifactId>4-java8-compat</artifactId>
   <packaging>war</packaging>
 
   <properties>

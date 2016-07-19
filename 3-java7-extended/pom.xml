@@ -10,7 +10,7 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>3_java7-extended</artifactId>
+  <artifactId>3-java7-extended</artifactId>
   <packaging>war</packaging>
 
   <properties>
