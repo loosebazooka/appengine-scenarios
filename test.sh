@@ -12,11 +12,20 @@ testDevserver ()
   local pattern=$2
   local pom=${project}/pom.xml
 
-  mvn -f $pom clean appengine:run &
+  mvn -f $pom clean appengine:run &> /dev/null &
   sleep 4
-  curl http://localhost:8080/test | grep -z $pattern || return 1
-  mvn -f $pom appengine:stop || return 1
+  if curl --silent http://localhost:8080/test | grep -z $pattern &> /dev/null
+  then
+    echo "DEVSERVER $project is up" 
+  else
+    echo "*** FAIL ***: DEVSERVER $project didn't come up"
+    return 1
+  fi
+
+  mvn -f $pom appengine:stop &> /dev/null 
   echo "DEVSERVER PASS $project"
+
+  return 0
 }
 
 testDeploy ()
@@ -26,14 +35,25 @@ testDeploy ()
   local pom=${project}/pom.xml
 
   echo "START DEPLOY $project"
-  mvn -f $pom clean appengine:deploy &> /dev/null || return 1
-  curl http://${project}-dot-${gcpproject}.appspot.com/test | grep -z $pattern &> /dev/null && echo $project is up || (echo "$pattern not found in $project" && return 1)
-  gcloud app services delete $project --quiet &> /dev/null || return 1
+  if mvn -f $pom clean appengine:deploy &> /dev/null \
+    && curl --silent http://${project}-dot-${gcpproject}.appspot.com/test \
+    | grep -z $pattern &> /dev/null
+  then
+    echo $project is up
+  else
+    echo "*** FAIL ***: $pattern not found in $project"
+    curl --silent http://${project}-dot-${gcpproject}.appspot.com/test
+    return 1
+  fi
+
+  echo "DELETING $project service"
+  gcloud app services delete $project --quiet &> /dev/null
   echo "DEPLOY PASS $project"
+  return 0
 }
 
-#testDevserver '1-standard' 'Hello.*FilePermission'
-#testDevserver '2-java7' 'Hello.*Flex'
+testDevserver '1-standard' 'Hello.*FilePermission'
+testDevserver '4-java8-compat' 'Hello.*Flex'
 
 testDeploy '1-standard' 'Hello.*FilePermission' \
 & testDeploy '2-java7' 'Hello.*Flex' \
@@ -43,6 +63,8 @@ testDeploy '1-standard' 'Hello.*FilePermission' \
 & testDeploy '6-java8-jetty9' 'Hello.*Flex' \
 & testDeploy '7-java8-jetty9-extended' 'Hello.*Flex' \
 & testDeploy '8-java8' 'Hello.*Flex' \
+& testDeploy '9-java8-compat-flex' 'Hello.*Flex' \
+& testDeploy '10-java8-flex' 'Hello.*Flex' \
 & wait && echo DONE SUCCESS || echo DONE FAILURE
 
 kill 0
