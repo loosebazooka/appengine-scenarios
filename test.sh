@@ -33,16 +33,19 @@ testDeploy ()
   local project=$1
   local pattern=$2
   local pom=${project}/pom.xml
+  local url=http://${project}-dot-${gcpproject}.appspot.com/test
 
   echo "START DEPLOY $project"
   if mvn -f $pom clean appengine:deploy &> /dev/null \
-    && curl --silent http://${project}-dot-${gcpproject}.appspot.com/test \
+    && sleep 10 \
+    && curl --silent $url \
     | grep -z $pattern &> /dev/null
   then
     echo $project is up
   else
     echo "*** FAIL ***: $pattern not found in $project"
-    curl --silent http://${project}-dot-${gcpproject}.appspot.com/test
+    echo $url
+    curl --silent $url
     return 1
   fi
 
