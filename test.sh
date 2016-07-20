@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # echo commands
-set -x
+#set -x
 
 JAVA_HOME=/usr/local/buildtools/java/jdk8
 
