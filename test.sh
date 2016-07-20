@@ -10,7 +10,7 @@ JAVA_HOME=/usr/local/buildtools/java/jdk8
 if [ "$#" -ne 2 ]; then
   echo "usage $0 <cloud-project> <gradle/maven>"
   exit 1
-fi 
+fi
 gcpproject=$1
 buildTool=$2
 
@@ -25,7 +25,7 @@ testDevserver ()
   local project=$1
   local pattern=$2
   local url=http://localhost:8080/test
-  
+
   if [ $buildTool = "maven" ]; then
     devAppServerStart="mvn -f ${project}/pom.xml clean appengine:start -U"
     devAppServerStop="mvn -f ${project}/pom.xml appengine:stop -U"
@@ -67,7 +67,7 @@ testDeploy ()
 
   echo "START DEPLOY $project"
   if eval $deploy &> /dev/null \
-    && curl --silent $url  && sleep 4 && curl --silent $url | grep -z "$pattern" &> /dev/null
+    && curl --silent $url &> /dev/null && sleep 5 && curl --silent $url | grep -z "$pattern" &> /dev/null
   then
     echo $project is up
   else
@@ -83,7 +83,9 @@ testDeploy ()
   return 0
 }
 
-testDevserver '1-standard' 'Hello.*FilePermission'
+
+
+testDevserve '1-standard' 'Hello.*FilePermission'
 testDevserver '2-java7' 'Hello.*Flex'
 testDevserver '3-java7-extended' 'Hello.*Flex'
 testDevserver '4-java8-compat' 'Hello.*Flex'
