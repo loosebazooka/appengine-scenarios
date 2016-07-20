@@ -30,8 +30,8 @@ testDevserver ()
     devAppServerStart="mvn -f ${project}/pom.xml clean appengine:start -U"
     devAppServerStop="mvn -f ${project}/pom.xml appengine:stop -U"
   else # buildtool = "gradle"
-    devAppServerStart="( cd ${project} && ./gradlew clean appengineStart )"
-    devAppServerStop="( cd ${project} && ./gradlew appengineStop )"
+    devAppServerStart="( cd ${project} && ./gradlew clean appengineStart --refresh-dependencies)"
+    devAppServerStop="( cd ${project} && ./gradlew appengineStop --refresh-dependencies)"
   fi
 
   if eval ${devAppServerStart} &> /dev/null \
@@ -62,7 +62,7 @@ testDeploy ()
   if [ $buildTool = "maven" ]; then
     deploy="mvn -f ${project}/pom.xml clean appengine:deploy -U"
   else # buildtool = "gradle"
-    deploy="( cd ${project} && ./gradlew clean appengineDeploy )"
+    deploy="( cd ${project} && ./gradlew clean appengineDeploy --refresh-dependencies)"
   fi
 
   echo "START DEPLOY $project"
