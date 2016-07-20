@@ -46,7 +46,7 @@ testDevserver ()
 
   eval $devAppServerStop &> /dev/null 
   # need to sleep a little for server to shutdown
-  sleep 2
+  sleep 4
   echo "DEVSERVER PASS $project"
 
   return 0
@@ -70,27 +70,29 @@ testDeploy ()
     && curl --silent $url &> /dev/null && sleep 5 && curl --silent $url | grep -z "$pattern" &> /dev/null
   then
     echo $project is up
+    echo "DELETING $project service"
+    gcloud app services delete $project --quiet &> /dev/null
+    echo "DEPLOY PASS $project"
+    return 0
   else
     echo "*** FAIL ***: DEPLOY FAILED $project: "$pattern" not found in $project"
     echo $url
     curl --silent $url
+    echo "DELETING $project service"
+    gcloud app services delete $project --quiet &> /dev/null
     return 1
   fi
 
-  echo "DELETING $project service"
-  gcloud app services delete $project --quiet &> /dev/null
-  echo "DEPLOY PASS $project"
-  return 0
 }
 
 
 
-testDevserver '1-standard' 'Hello.*FilePermission'
-testDevserver '2-java7' 'Hello.*Flex'
-testDevserver '3-java7-extended' 'Hello.*Flex'
-testDevserver '4-java8-compat' 'Hello.*Flex'
-testDevserver '5-java8-compat-extended' 'Hello.*Flex'
-testDevserver '9-java8-compat-flex' 'Hello.*Flex'
+#testDevserver '1-standard' 'Hello.*FilePermission'
+#testDevserver '2-java7' 'Hello.*Flex'
+#testDevserver '3-java7-extended' 'Hello.*Flex'
+#testDevserver '4-java8-compat' 'Hello.*Flex'
+#testDevserver '5-java8-compat-extended' 'Hello.*Flex'
+#testDevserver '9-java8-compat-flex' 'Hello.*Flex'
 
 testDeploy '1-standard' 'Hello.*FilePermission' \
 & testDeploy '2-java7' 'Hello.*Flex' \
