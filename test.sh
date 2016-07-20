@@ -85,7 +85,7 @@ testDeploy ()
 
 
 
-testDevserve '1-standard' 'Hello.*FilePermission'
+testDevserver '1-standard' 'Hello.*FilePermission'
 testDevserver '2-java7' 'Hello.*Flex'
 testDevserver '3-java7-extended' 'Hello.*Flex'
 testDevserver '4-java8-compat' 'Hello.*Flex'
