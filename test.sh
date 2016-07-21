@@ -25,6 +25,7 @@ testDevserver ()
   local project=$1
   local pattern=$2
   local url=http://localhost:8080/test
+  local outputFile=devserver.${project}.out
 
   if [ $buildTool = "maven" ]; then
     devAppServerStart="mvn -f ${project}/pom.xml clean appengine:start -U"
@@ -34,17 +35,16 @@ testDevserver ()
     devAppServerStop="( cd ${project} && ./gradlew appengineStop --refresh-dependencies)"
   fi
 
-  if eval ${devAppServerStart} &> /dev/null \
+  if eval ${devAppServerStart} &> $outputFile \
     && curl --silent $url | grep -z "$pattern" &> /dev/null
   then
     echo "DEVSERVER $project is up"
   else
     echo "*** FAIL ***: DEVSERVER $project didn't come up"
-    curl $url
     return 1
   fi
 
-  eval $devAppServerStop &> /dev/null 
+  eval $devAppServerStop &>> $outputFile
   # need to sleep a little for server to shutdown
   sleep 4
   echo "DEVSERVER PASS $project"
@@ -58,6 +58,7 @@ testDeploy ()
   local pattern=$2
   local pom=${project}/pom.xml
   local url=http://${project}-dot-${gcpproject}.appspot.com/test
+  local outputFile=deploy.${project}.out
 
   if [ $buildTool = "maven" ]; then
     deploy="mvn -f ${project}/pom.xml clean appengine:deploy -U"
@@ -66,20 +67,20 @@ testDeploy ()
   fi
 
   echo "START DEPLOY $project"
-  if eval $deploy &> /dev/null \
+  if eval $deploy &> $outputFile \
     && curl --silent $url &> /dev/null && sleep 5 && curl --silent $url | grep -z "$pattern" &> /dev/null
   then
     echo $project is up
     echo "DELETING $project service"
-    gcloud app services delete $project --quiet &> /dev/null
+    gcloud app services delete $project --quiet &>> $outputFile
     echo "DEPLOY PASS $project"
     return 0
   else
     echo "*** FAIL ***: DEPLOY FAILED $project: "$pattern" not found in $project"
     echo $url
-    curl --silent $url
+    curl --silent $url &>> $outputFile
     echo "DELETING $project service"
-    gcloud app services delete $project --quiet &> /dev/null
+    gcloud app services delete $project --quiet &>> /dev/null
     return 1
   fi
 
@@ -107,5 +108,4 @@ testDeploy '1-standard' 'Hello.*FilePermission' \
 & wait && echo DONE
 
 kill 0
-
 
