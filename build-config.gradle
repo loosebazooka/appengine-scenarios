@@ -1,1 +1,2 @@
-ext.appenginePluginJarVersion="0.1.1-SNAPSHOT"
+ext.appenginePluginJarVersion="0.1.1-beta"
+ext.appengineDependenciesVersion="1.9.42"

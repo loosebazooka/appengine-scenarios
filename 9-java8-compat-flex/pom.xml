@@ -17,6 +17,13 @@
     <java.target.version>1.8</java.target.version>
   </properties>
 
+  <dependencies>
+    <dependency>
+      <groupId>com.google.appengine</groupId>
+      <artifactId>appengine-api-1.0-sdk</artifactId>
+      <version>${appengine-dependencies.version}</version>
+    </dependency>
+  </dependencies>
 
 </project>
 

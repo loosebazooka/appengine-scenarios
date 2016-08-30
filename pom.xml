@@ -14,6 +14,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <appengine-maven-plugin.version>0.1.1-beta</appengine-maven-plugin.version>
+    <appengine-dependencies.version>1.9.42</appengine-dependencies.version>
   </properties>
 
   <dependencies>
