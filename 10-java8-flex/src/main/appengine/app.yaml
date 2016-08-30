@@ -1,3 +1,2 @@
 runtime: custom
 env: flex
-service: 10-java8-flex

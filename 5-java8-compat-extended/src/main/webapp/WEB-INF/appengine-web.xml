@@ -2,7 +2,6 @@
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
   <application>mineral-minutia-820</application>
   <vm>true</vm>
-  <module>5-java8-compat-extended</module>
   <!-- <env>flex</env> -->
   <threadsafe>true</threadsafe>
 

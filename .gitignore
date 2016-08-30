@@ -2,3 +2,5 @@
 **/target
 **/.gradle
 *.out
+**/.idea
+*.iml

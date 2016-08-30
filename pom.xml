@@ -61,6 +61,7 @@
         <artifactId>appengine-maven-plugin</artifactId>
         <version>${appengine-maven-plugin.version}</version>
         <configuration>
+          <promote>false</promote>
         </configuration>
       </plugin>
     </plugins>

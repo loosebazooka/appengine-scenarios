@@ -61,7 +61,7 @@ testDeploy ()
   local outputFile=deploy.${project}.out
 
   if [ $buildTool = "maven" ]; then
-    deploy="mvn -f ${project}/pom.xml clean appengine:deploy -U"
+    deploy="mvn -f ${project}/pom.xml clean appengine:deploy -Dapp.deploy.version=${project} -U"
   else # buildtool = "gradle"
     deploy="( cd ${project} && ./gradlew clean appengineDeploy --refresh-dependencies)"
   fi
@@ -71,16 +71,16 @@ testDeploy ()
     && curl --silent $url &> /dev/null && sleep 5 && curl --silent $url | grep -z "$pattern" &> /dev/null
   then
     echo $project is up
-    echo "DELETING $project service"
-    gcloud app services delete $project --quiet &>> $outputFile
+    echo "DELETING $project version"
+    gcloud app versions delete $project --quiet &>> $outputFile
     echo "DEPLOY PASS $project"
     return 0
   else
     echo "*** FAIL ***: DEPLOY FAILED $project: "$pattern" not found in $project"
     echo $url
     curl --silent $url &>> $outputFile
-    echo "DELETING $project service"
-    gcloud app services delete $project --quiet &>> /dev/null
+    echo "DELETING $project version"
+    gcloud app version delete $project --quiet &>> /dev/null
     return 1
   fi
 
