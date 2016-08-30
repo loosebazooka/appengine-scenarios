@@ -5,7 +5,7 @@
 
 
   <threadsafe>true</threadsafe>
-  <module>9-java8-compat-flex</module>
+  <version>9-java8-compat-flex</version>
   <system-properties>
     <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
   </system-properties>

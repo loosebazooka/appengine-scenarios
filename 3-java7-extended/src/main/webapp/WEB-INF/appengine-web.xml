@@ -4,7 +4,7 @@
   <vm>true</vm> 
   <!-- <env>flex</env> -->
   <threadsafe>true</threadsafe>
-  <module>3-java7-extended</module>
+  <version>3-java7-extended</version>
   <system-properties>
     <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
   </system-properties>
