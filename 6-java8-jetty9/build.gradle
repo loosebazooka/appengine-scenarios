@@ -32,11 +32,9 @@ task wrapper(type: Wrapper) {
   gradleVersion = "2.12"
 }
 
-model {
-  appengine {
-    deploy {
-      version = '6-java8-jetty9'
-      promote = false
-    }
+appengine {
+  deploy {
+    version = '6-java8-jetty9'
+    promote = false
   }
 }

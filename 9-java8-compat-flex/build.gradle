@@ -33,12 +33,9 @@ task wrapper(type: Wrapper) {
   gradleVersion = "2.12"
 }
 
-model {
-  appengine {
-    deploy {
-      version = '9-java8-compat-flex'
-      promote = false
-    }
+appengine {
+  deploy {
+    version = '9-java8-compat-flex'
+    promote = false
   }
 }
-

@@ -31,11 +31,9 @@ task wrapper(type: Wrapper) {
   gradleVersion = "2.12"
 }
 
-model {
-  appengine {
-    deploy {
-      version = '2-java7'
-      promote = false
-    }
+appengine {
+  deploy {
+    version = '2-java7'
+    promote = false
   }
 }
