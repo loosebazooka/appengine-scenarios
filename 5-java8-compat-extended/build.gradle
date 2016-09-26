@@ -29,12 +29,12 @@ dependencies {
 }
 
 task wrapper(type: Wrapper) {
-  gradleVersion = "2.12"
+  gradleVersion = "3.0"
 }
 
 appengine {
   deploy {
     version = '5-java8-compat-extended'
-      promote = false
+    promote = false
   }
 }
