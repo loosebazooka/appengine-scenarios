@@ -13,7 +13,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <appengine-maven-plugin.version>0.1.2</appengine-maven-plugin.version>
+    <appengine-maven-plugin.version>1.0.0</appengine-maven-plugin.version>
     <appengine-dependencies.version>1.9.42</appengine-dependencies.version>
   </properties>
 
